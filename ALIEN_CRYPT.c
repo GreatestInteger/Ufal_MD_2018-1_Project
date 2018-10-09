@@ -41,8 +41,14 @@ int euclidesExtended(long long int a,long long int b,long long int *x,long long 
     long long int x1, y1;
     long long int gcd = euclidesExtended(b%a, a, &x1, &y1);
 
+
     *x = y1 - (b/a) * x1;
     *y = x1;
+    
+    
+    if(*x < 0) {
+        *x += b;
+    }
 
     return gcd;
 }
