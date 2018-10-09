@@ -31,7 +31,7 @@ int calcGCD(long long a, long long b) {
     }
 }
 
-int euclidesExtended(long long int a,long long int b,long long int *x,long long int *y) {
+/*int euclidesExtended(long long int a,long long int b,long long int *x,long long int *y) {
     if (a == 0) {
         *x = 0;
         *y = 1;
@@ -45,12 +45,24 @@ int euclidesExtended(long long int a,long long int b,long long int *x,long long 
     *x = y1 - (b/a) * x1;
     *y = x1;
     
-    
     if(*x < 0) {
         *x += b;
     }
 
     return gcd;
+}*/
+
+int euclidesExtended(long long int a, long long int b) {
+	int b0 = b, t, q;
+	int x0 = 0, x1 = 1;
+	if (b == 1) return 1;
+	while (a > 1) {
+		q = a / b;
+		t = b, b = a % b, a = t;
+		t = x0, x0 = x1 - q * x0, x1 = t;
+	}
+	if (x1 < 0) x1 += b0;
+	return x1;
 }
 
 int modularPow(int base, int exponent, int modulus) {
@@ -160,7 +172,8 @@ void decrypt() {
 
     n = p*q;
     fi = (p - 1)*(q - 1);
-    euclidesExtended(e, fi, &d, &k);
+    //euclidesExtended(e, fi, &d, &k);
+    d = euclidesExtended(e, fi);
 
     char aux[100];
     long long int number;
@@ -232,7 +245,8 @@ void generate_keys() {
     fclose(publicKeyFile);
 
     fi = (p - 1)*(q - 1);
-    euclidesExtended(e, fi, &d, &k);
+    //euclidesExtended(e, fi, &d, &k);
+    d = euclidesExtended(e, fi);
 
     // Saving Private keys
     FILE *privateKeyFile = fopen("1_2_private_key.txt", "w");
