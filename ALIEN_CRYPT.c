@@ -44,7 +44,7 @@ int calcGCD(long long a, long long b) {
 
     *x = y1 - (b/a) * x1;
     *y = x1;
-    
+
     if(*x < 0) {
         *x += b;
     }
@@ -104,7 +104,6 @@ void mapAlphabet(char *msg, int file_size_) {
 }
 
 void encrypt() {
-
     printf("\tType the public keys N and E.\n\t");
 
     scanf("%lld", &n);
@@ -125,7 +124,11 @@ void encrypt() {
     //printf("file_size: %d strlen(buffer): %d\n", file_size, strlen(buffer));
     int i, current;
 
-    printf("\n\t==========\n\n\tMessage from 2_1_untouched_message.txt:\n\t");
+    printf("\n\t========== Option 2 output:\n\n\tMessage from 2_1_untouched_message.txt:\n\t\"");
+    for (i = 0; i < file_size; i++) {
+        printf("%c", buffer[i]);
+    }
+    printf("\"\n\t");
     for (i = 0; i < file_size; i++) {
         printf("%d ", buffer[i]);
     }
@@ -152,8 +155,6 @@ void encrypt() {
 
 void decrypt() {
     int i, file_size = 0;
-    // Getting numbers from user: P, Q, E
-    //printf("\nP: [%lld] Q: [%lld] E: [%lld]\n", p, q, e);
     printf("\tType one pair of prime numbers P and Q and an exponent E relativaly prime to (p - 1)(q- 1).\n\t");
 
     scanf("%lld", &p);
@@ -188,7 +189,7 @@ void decrypt() {
     encrypted_message = fopen("2_2_encrypted_message.txt", "rt");
 
     char data;
-    printf("\n\t==========\n\n\tDecrypted message:\n\t\"");
+    printf("\n\t========== Option 3 output:\n\n\tDecrypted message:\n\t\"");
     for(i = 0;i < file_size; i++) {
         fscanf(encrypted_message, "%lld", &number);
 
@@ -245,7 +246,6 @@ void generate_keys() {
     fclose(publicKeyFile);
 
     fi = (p - 1)*(q - 1);
-    //euclidesExtended(e, fi, &d, &k);
     d = euclidesExtended(e, fi);
 
     // Saving Private keys
@@ -253,7 +253,7 @@ void generate_keys() {
     fprintf(privateKeyFile, "%lld\n%lld\n%lld", p, q, d);
     fclose(privateKeyFile);
 
-    printf("\n\n\t==========\n\n\tPublic key:\tn: [%lld] e: [%lld]\n", p*q, e);
+    printf("\n\n\t========== Option 1 output:\n\n\tPublic key:\tn: [%lld] e: [%lld]\n", p*q, e);
     printf("\tPrivate key:\tp: [%lld] q: [%lld] d: [%lld]\n", p, q, d);
     printf("\n\tThe keys are also stored in the following files:\n\n\t\t1_1_public_key.txt\n\t\t1_2_private_key.txt\n\n\t==========\n\n");
 }
@@ -261,36 +261,9 @@ void generate_keys() {
 void main() {
 
     int choice;
-    /*
-    euclidesExtended(e, fi, &d, &k);
-    printf("%s %lld\n", "Chave privada: ", d);
-
-    printf("Mensagem:              ");
-    for (i = 0; i < strlen(msg); i++) {
-        printf("%c ", msg[i]);
-    }
-    encrypt(msg, n, e, codifiedMsg);
-
-    printf("\nMensagem codificada:   ");
-    for (i = 0; i < strlen(msg); i++) {
-        printf("%d ", codifiedMsg[i]);
-    }
-
-    printf("\nMensagem decodificada: ");
-    desencrypt(codifiedMsg, strlen(msg), p*q, d, decodefiedMsg);
-
-    printf("\nMensagem remapeada:    ");
-    for (i = 0; i < strlen(msg); i++) {
-        printf("%d ", decodefiedMsg[i] - 97);
-    }
-
-    printf("\nMensagem original:     ");
-    for (i = 0; i < strlen(msg); i++) {
-        printf("%c ", decodefiedMsg[i]);
-    }
-    */
-    printf("\n\tWelcome to Alien Crypt! Please choose:\n\n");
+    printf("\n\tWelcome to Alien Crypt!\n\n");
     do {
+        printf("\tPlease choose:\n\n");
         printf("\t1 Public Key Generator\n");
         printf("\t2 Encrypt (from 2_1_untouched_message.txt to 2_2_encrypted_message.txt)\n");
         printf("\t3 Decrypt (from 2_2_encrypted_message.txt to 3_decrypted_message.txt)\n");
